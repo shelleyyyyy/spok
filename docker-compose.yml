@@ -1,0 +1,27 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  fast:
+    build: ./fast/.
+    command: uvicorn main:app --host 0.0.0.0
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  web:
+    build: ./web/.
+    ports:
+      - 80:80
+  db:
+    build: ./db/.
+    ports:
+      - 8090:8090
+    volumes:
+      - pb_data_vol:/pb_data
+      - pb_mig_dta_vol:/pb_migrations
+
+volumes:
+  pb_data_vol:
+  pb_mig_dta_vol:
